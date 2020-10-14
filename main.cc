@@ -150,8 +150,8 @@ int main(int argc, char** argv) {
   shared_data = (int*)shmat(shm_id, NULL, 0);
 
 	do_dummy();
-	do_pthr_mutex();
 	do_CAS();
+	do_pthr_mutex();
 	do_futex();
 
   return 0;
