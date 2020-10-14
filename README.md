@@ -12,9 +12,9 @@ To test the correctness of our implementation, we create N_THREADS threads and e
 1. calls lock() method
 2. increases the global variable 
 3. calls unlock() method
-4. repeats 1-3 N_INC times.
+4. repeats \[1-3\] N_INC times.
 
-Then checks if N_THREADS * N_INC is equal to the value of the global variable.
+Then checks if (N_THREADS * N_INC) is equal to the value of the global variable.
 In addition to the futex-lock, we also conduct the test using dummy lock, simple Compare-And-Swap lock and pthread_mutex_lock.
 
 
