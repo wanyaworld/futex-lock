@@ -4,7 +4,7 @@
 
 This is a implementation of [futex](https://man7.org/linux/man-pages/man2/futex.2.html)-based blocking synchronization. In this lock implemenetation, one first try
 an atomic operation ([Compare-And-Swap](https://en.wikipedia.org/wiki/Compare-and-swap)) to test if one can get the lock immediately. If it fails, it calls futex() which makes it (probably) sleep. Later, it is waken up when
-the lock holder release the lock by calling futex() with FUTEX_WAKE operation flag. Even after sleeping, it checks if the lock variable represent that lock is "not held state" and 
+the lock holder release the lock by calling futex() with FUTEX_WAKE operation flag. Even after waking up, it checks if the lock variable represent that lock is "not held state" and 
 retry futex() if it does not. This prevents [sprious wakeup](https://en.wikipedia.org/wiki/Spurious_wakeup) negates the correctness of synchronization.
 
 To test the correctness of our implementation, we create N_THREADS threads and each thread 
