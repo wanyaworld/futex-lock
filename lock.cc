@@ -1,7 +1,7 @@
 #include "lock.h"
 
 int* shared_data;
-const unsigned int N_THREADS = 100;
+const unsigned int N_THREADS = 1000;
 const unsigned int N_INC = 1000;
 unsigned int N_BACKOFF = 10;
 
@@ -51,28 +51,20 @@ void futex_lock() {
 			return;
 	}
 
+
 	while (1) {
-		int ret = futex(&futex_lock_var, FUTEX_WAIT, 0, NULL, NULL, 0);
-		if (ret == -1) { } // retry futex
-		else if (ret == 0) {
-			if (futex_lock_var == 0) {
-				int CAS_ret = __sync_val_compare_and_swap(&futex_lock_var, 0, 1);
-				if (CAS_ret == 0)
-					return;
-				else
-					continue;
-			}
-			else {
-				//std::cout << "sprious wakeup" << std::endl;
-				continue;
-			}
-		}
+		futex(&futex_lock_var, FUTEX_WAIT, 1, NULL, NULL, 0);
+		int CAS_ret = __sync_val_compare_and_swap(&futex_lock_var, 0, 1);
+		if (CAS_ret == 0)
+			return;
+		else
+			continue;
 	}
 }
 
 void futex_unlock() {
 	__sync_val_compare_and_swap(&futex_lock_var, 1, 0);
-	int ret = futex(&futex_lock_var, FUTEX_WAKE, 1, NULL, NULL, 0);
+	futex(&futex_lock_var, FUTEX_WAKE, 1, NULL, NULL, 0);
 }
 
 void mutex_lock() {

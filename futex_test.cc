@@ -1,7 +1,7 @@
 #include "lock.h"
 #include <vector>
 
-static const unsigned int N_CASES = 100; /* How many cases we're gonna average. */
+static const unsigned int N_CASES = 10; /* How many cases we're gonna average. */
 static const unsigned int MAX_BACKOFF = N_THREADS / 10;
 
 int main() {

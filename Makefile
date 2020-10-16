@@ -8,4 +8,4 @@ main: main.cc
 lock: lock.cc
 	g++ -c lock.cc -lpthread
 clean:
-	rm run *.o
+	rm run futex_test *.o
