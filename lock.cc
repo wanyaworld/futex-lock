@@ -53,7 +53,10 @@ void futex_lock() {
 
 
 	while (1) {
-		futex(&futex_lock_var, FUTEX_WAIT, 1, NULL, NULL, 0);
+		int futex_ret = futex(&futex_lock_var, FUTEX_WAIT, 1, NULL, NULL, 0);
+		if (futex_ret == 0 && futex_lock_var != 0) { /* spurious wake-up */
+			continue;
+		}
 		int CAS_ret = __sync_val_compare_and_swap(&futex_lock_var, 0, 1);
 		if (CAS_ret == 0)
 			return;
