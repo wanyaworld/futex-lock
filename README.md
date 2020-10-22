@@ -1,4 +1,5 @@
-
+## This repo is deprecated
+See [Adaptive-Backoff-Futex-Lock](https://github.com/wanyaworld/Adaptive-Backoff-Futex-Lock) instead.
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
